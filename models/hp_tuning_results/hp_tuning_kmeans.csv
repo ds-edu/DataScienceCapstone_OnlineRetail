@@ -1,0 +1,3 @@
+Model,Tuning,Best_params,Inertia
+KMeans,SMBO,"{'algorithm': 1, 'init': 1, 'max_iter': 701.0, 'n_clusters': 2.0, 'n_init': 9.0, 'tol': 3}",6437.173469480861
+KMeans,RandomizedSearchCV,"{'cluster__tol': 0.1, 'cluster__n_init': 10, 'cluster__n_clusters': 2, 'cluster__max_iter': 200, 'cluster__init': 'random', 'cluster__algorithm': 'lloyd'}",5780.09743041892
