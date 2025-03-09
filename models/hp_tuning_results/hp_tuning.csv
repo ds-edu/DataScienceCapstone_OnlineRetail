@@ -1,5 +1,8 @@
 Model,Tuning,Best_params,Silhouette_Score
+KMeans,GridSeachCV,"{'cluster__algorithm': 'lloyd', 'cluster__init': 'k-means++', 'cluster__max_iter': 100, 'cluster__n_clusters': 2, 'cluster__n_init': 5, 'cluster__tol': 0.1}",0.602058462575161
 KMeans,RandomizedSearchCV,"{'cluster__tol': 0.1, 'cluster__n_init': 10, 'cluster__n_clusters': 2, 'cluster__max_iter': 200, 'cluster__init': 'random', 'cluster__algorithm': 'lloyd'}",0.5984635762963102
-Agglomerative,RandomizedSearchCV,"{'cluster__n_clusters': 2, 'cluster__metric': 'manhattan', 'cluster__linkage': 'single', 'cluster__compute_distances': True}",0.35807047745069964
-DBSCAN,RandomizedSearchCV,"{'cluster__min_samples': 10, 'cluster__metric': 'euclidean', 'cluster__eps': 0.16999999999999998}",-0.1594993561714266
-KMeans,SMBO,"{'algorithm': 0, 'init': 1, 'max_iter': 739.0, 'n_clusters': 2.0, 'n_init': 10.0, 'tol': 3}",Score N/A
+Agglomerative,GridSeachCV,"{'cluster__compute_distances': True, 'cluster__linkage': 'complete', 'cluster__metric': 'euclidean', 'cluster__n_clusters': 2}",0.489265330024139
+Agglomerative,RandomizedSearchCV,"{'cluster__n_clusters': 2, 'cluster__metric': 'manhattan', 'cluster__linkage': 'single', 'cluster__compute_distances': True}",0.3580704774506997
+DBSCAN,RandomizedSearchCV,"{'cluster__min_samples': 10, 'cluster__metric': 'euclidean', 'cluster__eps': 0.16999999999999998}",-0.15949935617142658
+DBSCAN,GridSeachCV,"{'cluster__eps': 0.16999999999999998, 'cluster__metric': 'euclidean', 'cluster__min_samples': 10}",-0.15949935617142658
+KMeans,SMBO,"{'algorithm': 1, 'init': 0, 'max_iter': 991.0, 'n_clusters': 2.0, 'n_init': 6.0, 'tol': 3}",Score N/A
