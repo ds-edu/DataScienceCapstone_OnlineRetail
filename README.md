@@ -1,4 +1,4 @@
-![cover_photo](../docs/readme_files/Online_Shoppers.jpg)
+![cover_photo](./docs/readme_files/Online_Shoppers.jpg)
 
 # Customer Segmentation For An Online Retail Store
 
@@ -26,11 +26,11 @@ An interesting column is the invoices which have values not conforming with the 
 
 A total of 392733 records remain at the end of the Data Cleaning step.
 
-![Data Cleaning Summary](../docs/readme_files/Summary_DW.png)
+![Data Cleaning Summary](./docs/readme_files/Summary_DW.png)
 
 ## 3. EDA
 
-The [EDA step](../notebooks/ExploratoryDataAnalysis.ipynb) revealed 0-priced items and transactions later than December 30, 2010. These records were then removed and the dataset ended up with 367,023 records after dropping those invalid records. Out of the 367,023 records the valid transactions for the whole year can be summarized as follows:
+The [EDA step](./notebooks/ExploratoryDataAnalysis.ipynb) revealed 0-priced items and transactions later than December 30, 2010. These records were then removed and the dataset ended up with 367,023 records after dropping those invalid records. Out of the 367,023 records the valid transactions for the whole year can be summarized as follows:
 
 - Unique Invoices:  17132
 - Unique Countries:  36
@@ -39,7 +39,7 @@ The [EDA step](../notebooks/ExploratoryDataAnalysis.ipynb) revealed 0-priced ite
 
 Exploratory Data Analysis of the monthly sales indicated a steep decline in sales in December was revealed.
 
-![EDA monthly sales](..docs/readme_files/EDA_monthlysales.png)
+![EDA monthly sales](.docs/readme_files/EDA_monthlysales.png)
 
 Further investigation revealed that the transactions for December was incomplete and that the latest was captured on the 9th of December which even less than the first half of the month. The total transactions in December only accounted for less than 5% of the whole transactions for the year. 
 Although there was transaction as high as 168469.6, much of the sales during the month are in the lower amount. 
@@ -49,7 +49,7 @@ Although there was transaction as high as 168469.6, much of the sales during the
 
 ## 4. Pre-processing
 
-[Preprocessing](../notebooks/Preprocessing.ipynb) step began by feature engineering the columns to reflect the RFM features per customer - that is:
+[Preprocessing](./notebooks/Preprocessing.ipynb) step began by feature engineering the columns to reflect the RFM features per customer - that is:
 
 - Recency - How long has it been since the customer's last purchase date? * 
 - Frequency - How many transactions in did the customer have? 
@@ -57,12 +57,12 @@ Although there was transaction as high as 168469.6, much of the sales during the
 
 The distribution of data per feature is right-skewed, which indicates presence of outliers.
 
-![RFM Distribution](../docs/readme_files/FE_rfmdist.png)
+![RFM Distribution](./docs/readme_files/FE_rfmdist.png)
 
 The focus of this project is on clustering, so only the non-outliers will be processed by the model. 
 It is necessary to perform separate analysis on outliers as they represent extreme behaviours by the customers, such as very big spending and very frequent purchases. Below is the boxplot before and after separating the outliers:
 
-![RFM Outliers](../docs/readme_files/FE_outlierdist.png)
+![RFM Outliers](./docs/readme_files/FE_outlierdist.png)
 
 These outliers will be included in the cluster analysis down the line:
 
@@ -76,7 +76,7 @@ These outliers will be included in the cluster analysis down the line:
 - Agglomerative Clustering 
 - DBSCAN
 
-In the [Modeling](../notebooks/Modeling.ipynb) step, three hyperparameter optimization searches were tested accross all three aforementioned algorithms by utilizing the nested cross validation approach to determine the optimal parameters per algorithm. As the process cycles through each algorithm, a scoring function is used to determine the silhouette score for each algorithm. In the results below, Silhouette scores were computed for Agglomerative Clustering and DBSCAN due to their lack of loss function. 
+In the [Modeling](./notebooks/Modeling.ipynb) step, three hyperparameter optimization searches were tested accross all three aforementioned algorithms by utilizing the nested cross validation approach to determine the optimal parameters per algorithm. As the process cycles through each algorithm, a scoring function is used to determine the silhouette score for each algorithm. In the results below, Silhouette scores were computed for Agglomerative Clustering and DBSCAN due to their lack of loss function. 
 
 SMBO (Sequential Model-Based Optimization) can't be used on AC and DBSCAN as they don't have a loss function. Although SMBO was used in KMeans alone, the scoring function (Silhouette score) can't be minimized so the result was deliberately tagged as 'Score N/A'.
 
@@ -110,11 +110,11 @@ The best parameters from SMBO were used in re-building the model.
 
 To get a sense of the best K- no. of clusters, an inertia plot was shown:
 
-![Inertia Plot](../docs/readme_files/Modeling_inertia_plot.png)
+![Inertia Plot](./docs/readme_files/Modeling_inertia_plot.png)
 
 The "knee" point could is either n_clusters=3 or n_clusters=4 so an additional Silhouette Analysis was performed. The Silhouette Plot revealed that between n_clusters=3 and n_clusters=4, the former has lower negative silhouette coefficient values, and the cluster label heights is even better compared to the latter.
 
-![Inertia Plot](../docs/readme_files/Modeling_silplot.png)
+![Inertia Plot](./docs/readme_files/Modeling_silplot.png)
 
 
 **The optimal k number of clusters for this data using KMeans algorithm is 3.**
@@ -123,7 +123,7 @@ The "knee" point could is either n_clusters=3 or n_clusters=4 so an additional S
 
 Meaningful labels can be assigned by looking at the distribution of the clusters in terms of the three key features - recency, frequency, and monetary values. 
 
-![Clusters Distribution](../docs/readme_files/Cluster_violinplot.png)
+![Clusters Distribution](./docs/readme_files/Cluster_violinplot.png)
  
 Cluster 0: **Moderate**
 - Moderately frequent buyers that are not necessarily high spenders, and haven't purchased recently. 
@@ -139,8 +139,8 @@ Outliers in the data are designated as follows:
 
 ### CUSTOMER SEGMENTS
 
-![Customer Segments Bar](../docs/readme_files/Cluster_finalbar.png)
-![Customer Segments Tree](../docs/readme_files/Cluster_treemap.png)
+![Customer Segments Bar](./docs/readme_files/Cluster_finalbar.png)
+![Customer Segments Tree](./docs/readme_files/Cluster_treemap.png)
 
 <font color='#fda848'><b>MODERATE</b></font>
 - Moderately frequent buyers that are not necessarily high spenders, and haven't purchased recently. 
