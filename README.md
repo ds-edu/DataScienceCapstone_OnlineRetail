@@ -44,7 +44,8 @@ Exploratory Data Analysis of the monthly sales indicated a steep decline in sale
 Further investigation revealed that the transactions for December was incomplete and that the latest was captured on the 9th of December which even less than the first half of the month. The total transactions in December only accounted for less than 5% of the whole transactions for the year. 
 Although there was transaction as high as 168469.6, much of the sales during the month are in the lower amount. 
 
-![December sales distribution](../docs/readme_files/EDA_decemberdist.png)
+![December sales distribution](./docs/readme_files/EDA_decbox.png)
+![December sales distribution](./docs/readme_files/EDA_decbar.png)
 
 
 ## 4. Pre-processing
@@ -60,9 +61,9 @@ The distribution of data per feature is right-skewed, which indicates presence o
 ![RFM Distribution](./docs/readme_files/FE_rfmdist.png)
 
 The focus of this project is on clustering, so only the non-outliers will be processed by the model. 
-It is necessary to perform separate analysis on outliers as they represent extreme behaviours by the customers, such as very big spending and very frequent purchases. Below is the boxplot before and after separating the outliers:
+It is necessary to perform separate analysis on outliers as they represent extreme behaviours by the customers, such as very big spending and very frequent purchases. Below is the boxplot after separating the outliers:
 
-![RFM Outliers](./docs/readme_files/FE_outlierdist.png)
+![RFM Outliers](./docs/readme_files/FE_outliers.png)
 
 These outliers will be included in the cluster analysis down the line:
 
@@ -127,8 +128,10 @@ Meaningful labels can be assigned by looking at the distribution of the clusters
  
 Cluster 0: **Moderate**
 - Moderately frequent buyers that are not necessarily high spenders, and haven't purchased recently. 
+
 Cluster 1: **Recent**
 - Less frequent buyers who are low-spenders but made recent purchases.
+
 Cluster 2: **Loyal**
 - Frequent shoppers who are high spenders, although no recent purchases.
 
@@ -140,6 +143,9 @@ Outliers in the data are designated as follows:
 ### CUSTOMER SEGMENTS
 
 ![Customer Segments Bar](./docs/readme_files/Cluster_finalbar.png)
+
+**Customer Segments Proportion**
+
 ![Customer Segments Tree](./docs/readme_files/Cluster_treemap.png)
 
 <font color='#fda848'><b>MODERATE</b></font>
