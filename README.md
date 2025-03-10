@@ -12,7 +12,7 @@
 
 ## 1. Data
 
-Data Source: [UCI Machine Learning Repository | Online Retail II]('https://archive.ics.uci.edu/dataset/502/online+retail+ii')
+Data Source: [UCI Machine Learning Repository | Online Retail II](https://archive.ics.uci.edu/dataset/502/online+retail+ii)
 
 The dataset contains all transactions for a UK-based online retailer that sells all occasion gift-ware. This e-commerce dataset, made available by the UCI Machine Learning Repository, contains transactions made by customers from 2009 to 2011. This project will work on the latest transactions done in 2010 by approximately 4,300 customers.
 
@@ -20,7 +20,7 @@ Detailed description of the fields can be found in the aforementioned link.
 
 ## 2. Data Wrangling
 
-The [Data Wrangling step](../notebooks/DataWrangling.ipynb) kicked off with 541,910 records in the 2010 tab of the dataset. There were inconsistencies found in the dataset such as blank customer ID (~25%), negative quantities (1.6%) which were found to be related to cancelled invoices, and duplicate records (~1% ). These records were dropped from the dataset as they were deemed not helpful in analyzing the customer transactions. 
+The [Data Wrangling](../notebooks/DataWrangling.ipynb) step kicked off with 541,910 records in the 2010 tab of the dataset. There were inconsistencies found in the dataset such as blank customer ID (~25%), negative quantities (1.6%) which were found to be related to cancelled invoices, and duplicate records (~1% ). These records were dropped from the dataset as they were deemed not helpful in analyzing the customer transactions. 
 
 An interesting column is the invoices which have values not conforming with the documented notation; however, thorough investigation suggested thatthose records don't contain irregularities in their respective numeric data. An assumption was then made that these transactions were made manually or done outside the order placement process. Because there are no anomalies in the numeric data, these records were not dropped.
 
@@ -30,7 +30,7 @@ A total of 392733 records remain at the end of the Data Cleaning step.
 
 ## 3. EDA
 
-The [EDA step](./notebooks/ExploratoryDataAnalysis.ipynb) revealed 0-priced items and transactions later than December 30, 2010. These records were then removed and the dataset ended up with 367,023 records after dropping those invalid records. Out of the 367,023 records the valid transactions for the whole year can be summarized as follows:
+The [EDA](./notebooks/ExploratoryDataAnalysis.ipynb) step revealed 0-priced items and transactions later than December 30, 2010. These records were then removed and the dataset ended up with 367,023 records after dropping those invalid records. Out of the 367,023 records the valid transactions for the whole year can be summarized as follows:
 
 - Unique Invoices:  17132
 - Unique Countries:  36
@@ -45,12 +45,10 @@ Further investigation revealed that the transactions for December was incomplete
 Although there was transaction as high as 168469.6, much of the sales during the month are in the lower amount. 
 
 ![December sales distribution](./docs/readme_files/EDA_decbox.png)
-![December sales distribution](./docs/readme_files/EDA_decbar.png)
-
 
 ## 4. Pre-processing
 
-[Preprocessing](./notebooks/Preprocessing.ipynb) step began by feature engineering the columns to reflect the RFM features per customer - that is:
+[Preprocessing](./notebooks/Preprocessing.ipynb) step was initiated by feature engineering the columns to reflect the RFM features per customer - that is:
 
 - Recency - How long has it been since the customer's last purchase date? * 
 - Frequency - How many transactions in did the customer have? 
@@ -91,7 +89,7 @@ SMBO (Sequential Model-Based Optimization) can't be used on AC and DBSCAN as the
 |DBSCAN       |GridSeachCV       |{'cluster__eps': 0.16999999999999998, 'cluster__metric': 'euclidean', 'cluster__min_samples': 10}                                                           |-0.15949935617142658|
 |KMeans       |SMBO              |{'algorithm': 1, 'init': 0, 'max_iter': 991.0, 'n_clusters': 2.0, 'n_init': 6.0, 'tol': 3}                                                                  |Score N/A           |
 
-Out of the model evaluation outcomes, **KMeans** and **Agglomerative Hierarchichal** clustering yielded more promising silhouette scores. It can also be surmised that DBSCAN may not be the appropriate clustering algorithm for the dataset since it has negative silhouette scores which indicates that the clustering was poor and overlap more compared to other algorithms that have higher silhouette score. 
+Out of the model evaluation outcomes, **KMeans** and **Agglomerative Hierarchichal** clustering yielded more promising silhouette scores. It can also be surmised that DBSCAN may not be the appropriate clustering algorithm for the dataset since it has negative silhouette scores which indicates that poor clustering and more overlapping compared to other algorithms that have a higher silhouette score. 
 
 Determining the best parameters for KMeans using GridSearchCV, RandomizedSearchCV, and SMBO with the inertia as the criteria produced the following results:
 
@@ -107,13 +105,15 @@ SMBO works by considering the previously seen hyperparameter combinations when c
 The best parameters from SMBO were used in re-building the model.
 
 **Chosen algorithm : KMeans**
+
 **Best parameters : {'algorithm': 'lloyd', 'init': 'k-means++', 'max_iter': 197, 'n_clusters': 2, 'n_init': 9, 'tol': 0.01}**
 
 To get a sense of the best K- no. of clusters, an inertia plot was shown:
 
 ![Inertia Plot](./docs/readme_files/Modeling_inertia_plot.png)
 
-The "knee" point could is either n_clusters=3 or n_clusters=4 so an additional Silhouette Analysis was performed. The Silhouette Plot revealed that between n_clusters=3 and n_clusters=4, the former has lower negative silhouette coefficient values, and the cluster label heights is even better compared to the latter.
+The "knee" point is either n_clusters=3 or n_clusters=4 so an additional Silhouette Analysis was performed.\
+The Silhouette Plot revealed that between n_clusters=3 and n_clusters=4, the former has lower negative silhouette coefficient values, and the cluster label heights is even better compared to the latter.
 
 ![Inertia Plot](./docs/readme_files/Modeling_silplot.png)
 
@@ -147,6 +147,9 @@ Outliers in the data are designated as follows:
 **Customer Segments Proportion**
 
 ![Customer Segments Tree](./docs/readme_files/Cluster_treemap.png)
+
+
+**Customer Segments Analysis and Recommendations**
 
 <font color='#fda848'><b>MODERATE</b></font>
 - Moderately frequent buyers that are not necessarily high spenders, and haven't purchased recently. 
