@@ -100,7 +100,7 @@ Determining the best parameters for KMeans using GridSearchCV, RandomizedSearchC
 |KMeans       |GridSearchCV      |{'cluster__algorithm': 'lloyd', 'cluster__init': 'k-means++', 'cluster__max_iter': 100, 'cluster__n_clusters': 2, 'cluster__n_init': 5, 'cluster__tol': 0.1}|5798.164356724086   |
 |KMeans       |RandomizedSearchCV|{'cluster__tol': 0.1, 'cluster__n_init': 10, 'cluster__n_clusters': 2, 'cluster__max_iter': 200, 'cluster__init': 'random', 'cluster__algorithm': 'lloyd'}  |5780.09743041892    |
 
-GridSearch and Random search methods are relatively inefficient compared to SMBO.
+GridSearch and Randomized CV search methods are relatively inefficient compared to SMBO.
 SMBO works by considering the previously seen hyperparameter combinations when choosing the next set of hyperparameters to evluate. Grid and random searches, on the other hand, are completely uninformed by past evaluations and spends significant amount of time evaluating “bad” hyperparameters.
 
 The best parameters from SMBO were used in re-building the model.
