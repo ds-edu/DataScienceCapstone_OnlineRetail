@@ -39,7 +39,7 @@ The [EDA step](./notebooks/ExploratoryDataAnalysis.ipynb) revealed 0-priced item
 
 Exploratory Data Analysis of the monthly sales indicated a steep decline in sales in December was revealed.
 
-![EDA monthly sales](.docs/readme_files/EDA_monthlysales.png)
+![EDA Monthly Sales](./docs/readme_files/EDA_monthlysales.png)
 
 Further investigation revealed that the transactions for December was incomplete and that the latest was captured on the 9th of December which even less than the first half of the month. The total transactions in December only accounted for less than 5% of the whole transactions for the year. 
 Although there was transaction as high as 168469.6, much of the sales during the month are in the lower amount. 
