@@ -191,3 +191,4 @@ Recommendations:
 2. Implement customer retention and loyalty programs
 3. Offer expedited or free shipping vouchers (whenever applicable)
 
+## 
