@@ -8,9 +8,9 @@
 
 *An effective customer segmentation analysis leads to better customer insights, which enable marketing teams to make informed strategic decisions regarding messaging and positioning. This strategic approach fosters innovative and creative solutions that enhance profitability.* 
 
-*This project aims to utilize machine learning for customer segmentation based on RFM analysis, focusing on three key features: Recency, Frequency, and Monetary value. The analysis aims to uncover valuable insights into customer purchasing behavior and transform the transactional data into a customer-centric dataset through feature engineering and clustering that will effectively aid in segmenting customers, enabling the business to determine appropriate marketing strategies and enhance the customer experience. Additionally, this analysis has the potential to significantly boost product sales, offering a promising outlook for the future*
-
 ## 1. Data
+
+This project aims to utilize machine learning for customer segmentation based on RFM analysis, focusing on three key features: Recency, Frequency, and Monetary value. The analysis aims to uncover valuable insights into customer purchasing behavior and transform the transactional data into a customer-centric dataset through feature engineering and clustering that will effectively aid in segmenting customers, enabling the business to determine appropriate marketing strategies and enhance the customer experience. Additionally, this analysis has the potential to significantly boost product sales, offering a promising outlook for the future
 
 Data Source: [UCI Machine Learning Repository | Online Retail II](https://archive.ics.uci.edu/dataset/502/online+retail+ii)
 
@@ -24,9 +24,16 @@ The [Data Wrangling](../notebooks/DataWrangling.ipynb) step kicked off with 541,
 
 An interesting column is the invoices which have values not conforming with the documented notation; however, thorough investigation suggested thatthose records don't contain irregularities in their respective numeric data. An assumption was then made that these transactions were made manually or done outside the order placement process. Because there are no anomalies in the numeric data, these records were not dropped.
 
-A total of 392733 records remain at the end of the Data Cleaning step.
+A total of 392733 records remain at the end of the Data Wrangling process.
 
-![Data Cleaning Summary](./docs/readme_files/Summary_DW.png)
+|Number |Description                                      |
+|-------|-------------------------------------------------|
+|541910 |Initial number of records                        |
+|-135080|Records with null Customer IDs dropped           |
+|-8905  |Negative quantities or cancelled invoices dropped|
+|-5192  |Duplicate records dropped                        |
+|392733 |Rows after Data Wrangling process                |
+
 
 ## 3. EDA
 
@@ -39,12 +46,12 @@ The [EDA](./notebooks/ExploratoryDataAnalysis.ipynb) step revealed 0-priced item
 
 Exploratory Data Analysis of the monthly sales indicated a steep decline in sales in December was revealed.
 
-![EDA Monthly Sales](./docs/readme_files/EDA_monthlysales.png)
+![EDA Monthly Sales](./reports/figures/EDA_monthlysales.png)
 
 Further investigation revealed that the transactions for December was incomplete and that the latest was captured on the 9th of December which even less than the first half of the month. The total transactions in December only accounted for less than 5% of the whole transactions for the year. 
 Although there was transaction as high as 168469.6, much of the sales during the month are in the lower amount. 
 
-![December sales distribution](./docs/readme_files/EDA_decbox.png)
+![December sales distribution](./reports/figures/EDA_decbox.png)
 
 ## 4. Pre-processing
 
@@ -56,14 +63,14 @@ Although there was transaction as high as 168469.6, much of the sales during the
 
 The distribution of data per feature is right-skewed, which indicates presence of outliers.
 
-![RFM Distribution](./docs/readme_files/FE_rfmdist.png)
+![RFM Distribution](./reports/figures/FE_rfmdist.png)
 
 The focus of this project is on clustering, so only the non-outliers will be processed by the model. 
 It is necessary to perform separate analysis on outliers as they represent extreme behaviours by the customers, such as very big spending and very frequent purchases. Below is the boxplot after separating the outliers:
 
-![RFM Outliers](./docs/readme_files/FE_outliers.png)
+![RFM Outliers](./reports/figures/FE_del_outliers.png)
 
-These outliers will be included in the cluster analysis down the line:
+The outliers will be included in the cluster analysis down the line:
 
 - Monetary outliers:  402
 - Frequency outliers:  412
@@ -75,56 +82,59 @@ These outliers will be included in the cluster analysis down the line:
 - Agglomerative Clustering 
 - DBSCAN
 
-In the [Modeling](./notebooks/Modeling.ipynb) step, three hyperparameter optimization searches were tested accross all three aforementioned algorithms by utilizing the nested cross validation approach to determine the optimal parameters per algorithm. As the process cycles through each algorithm, a scoring function is used to determine the silhouette score for each algorithm. In the results below, Silhouette scores were computed for Agglomerative Clustering and DBSCAN due to their lack of loss function. 
+**Hyperparameter Search: Nested Cross-Validation**
 
-SMBO (Sequential Model-Based Optimization) can't be used on AC and DBSCAN as they don't have a loss function. Although SMBO was used in KMeans alone, the scoring function (Silhouette score) can't be minimized so the result was deliberately tagged as 'Score N/A'.
+In the [Modeling](./notebooks/Modeling.ipynb) step, three hyperparameter optimization searches were tested accross all three aforementioned algorithms by utilizing the nested cross validation approach to determine the optimal parameters per algorithm.
 
-|Algorithm        |Tuning            |Best_params                                                                                                                                                 |Silhouette_Score    |
-|-------------|------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|
-|KMeans       |GridSeachCV       |{'cluster__algorithm': 'lloyd', 'cluster__init': 'k-means++', 'cluster__max_iter': 100, 'cluster__n_clusters': 2, 'cluster__n_init': 5, 'cluster__tol': 0.1}|0.602058462575161   |
-|KMeans       |RandomizedSearchCV|{'cluster__tol': 0.1, 'cluster__n_init': 10, 'cluster__n_clusters': 2, 'cluster__max_iter': 200, 'cluster__init': 'random', 'cluster__algorithm': 'lloyd'}  |0.5984635762963102  |
-|Agglomerative|GridSeachCV       |{'cluster__compute_distances': True, 'cluster__linkage': 'complete', 'cluster__metric': 'euclidean', 'cluster__n_clusters': 2}                              |0.489265330024139   |
-|Agglomerative|RandomizedSearchCV|{'cluster__n_clusters': 2, 'cluster__metric': 'manhattan', 'cluster__linkage': 'single', 'cluster__compute_distances': True}                                |0.3580704774506997  |
-|DBSCAN       |RandomizedSearchCV|{'cluster__min_samples': 10, 'cluster__metric': 'euclidean', 'cluster__eps': 0.16999999999999998}                                                           |-0.15949935617142658|
-|DBSCAN       |GridSeachCV       |{'cluster__eps': 0.16999999999999998, 'cluster__metric': 'euclidean', 'cluster__min_samples': 10}                                                           |-0.15949935617142658|
-|KMeans       |SMBO              |{'algorithm': 1, 'init': 0, 'max_iter': 991.0, 'n_clusters': 2.0, 'n_init': 6.0, 'tol': 3}                                                                  |Score N/A           |
+As the hyperparameter search process cycles through each algorithm, a scoring function is used to determine the their respective silhouette scores. 
 
-Out of the model evaluation outcomes, **KMeans** and **Agglomerative Hierarchichal** clustering yielded more promising silhouette scores. It can also be surmised that DBSCAN may not be the appropriate clustering algorithm for the dataset since it has negative silhouette scores which indicates that poor clustering and more overlapping compared to other algorithms that have a higher silhouette score. 
+![Hyperparameter Search](./reports/figures/hp_search.png)
+
+[Hyperparameter Search Results](./models/hp_tuning_results/hp_search.csv)
+
+Out of the model evaluation outcomes, the hyperparameters in **KMeans** and **Agglomerative Hierarchichal Clustering** algorithms produced better silhouette scores in both cross-validation searches than DBSCAN. 
+
+Given this result, DBSCAN may not be the appropriate clustering algorithm for this dataset since it has negative scores indicating a poor clustering performance (and more overlapping clusters) compared to the two other algorithms that have a higher score. 
+
+**KMeans metrics for CV and SMBO results**
 
 Determining the best parameters for KMeans using GridSearchCV, RandomizedSearchCV, and SMBO with the inertia as the criteria produced the following results:
 
-|Algorithm        |Tuning            |Best_params                                                                                                                                                 |Inertia             |
-|-------------|------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|
-|KMeans       |SMBO              |{'algorithm': 0, 'init': 1, 'max_iter': 197.0, 'n_clusters': 2.0, 'n_init': 9.0, 'tol': 2}                                                                  |6419.7229907037645  |
-|KMeans       |GridSearchCV      |{'cluster__algorithm': 'lloyd', 'cluster__init': 'k-means++', 'cluster__max_iter': 100, 'cluster__n_clusters': 2, 'cluster__n_init': 5, 'cluster__tol': 0.1}|5798.164356724086   |
-|KMeans       |RandomizedSearchCV|{'cluster__tol': 0.1, 'cluster__n_init': 10, 'cluster__n_clusters': 2, 'cluster__max_iter': 200, 'cluster__init': 'random', 'cluster__algorithm': 'lloyd'}  |5780.09743041892    |
+|Tuning |Best_params                                      |Inertia           |Silhouette_Score   |
+|-------|-------------------------------------------------|------------------|-------------------|
+|SMBO   |{'algorithm': 'lloyd', 'init': 'random', 'max_iter': 645, 'n_clusters': 2, 'n_init': 5, 'tol': 0.1}|6445.957038493043 |0.4701018078133987 |
+|RandomizedSearchCV|{'tol': 0.1, 'n_init': 5, 'n_clusters': 3, 'max_iter': 200, 'init': 'k-means++', 'algorithm': 'elkan'}|3783.1724836942167|0.46830813890287193|
+|GridSeachCV|{'algorithm': 'lloyd', 'init': 'random', 'max_iter': 100, 'n_clusters': 3, 'n_init': 10, 'tol': 0.01}|3780.7154605260903|0.4691852183619154 |
 
 GridSearch and Randomized CV search methods are relatively inefficient compared to SMBO.
 SMBO works by considering the previously seen hyperparameter combinations when choosing the next set of hyperparameters to evluate. Grid and random searches, on the other hand, are completely uninformed by past evaluations and spends significant amount of time evaluating “bad” hyperparameters.
 
-The best parameters from SMBO were used in re-building the model.
+| SMBO is the best hyperparameter search method, so its corresponding hyperparameters are utilized in model. |
 
-**Chosen algorithm : KMeans**
+**KMeans Clustering using best hyperparameters from SMBO**
 
-**Best parameters : {'algorithm': 'lloyd', 'init': 'k-means++', 'max_iter': 197, 'n_clusters': 2, 'n_init': 9, 'tol': 0.01}**
+> - Chosen algorithm : KMeans
+> - Best parameters : {'algorithm': 'lloyd', 'init': 'random', 'max_iter': 645, 'n_clusters': 2, 'n_init': 5, 'tol': 0.1}
 
 To get a sense of the best K- no. of clusters, an inertia plot was shown:
 
-![Inertia Plot](./docs/readme_files/Modeling_inertia_plot.png)
+![Inertia Plot](./reports/figures/km_inertiaplot.png)
 
 The "knee" point is either n_clusters=3 or n_clusters=4 so an additional Silhouette Analysis was performed.\
 The Silhouette Plot revealed that between n_clusters=3 and n_clusters=4, the former has lower negative silhouette coefficient values, and the cluster label heights is even better compared to the latter.
 
-![Inertia Plot](./docs/readme_files/Modeling_silplot.png)
+![Silhouette Analysis](./reports/figures/km_silplot.png)
 
+| **The optimal k number of clusters for this data using KMeans algorithm is 3.** |
 
-**The optimal k number of clusters for this data using KMeans algorithm is 3.**
+[Pickle files for clusters 2-10 here](./models)
+[KMeans Evaluation Metrics Summary](./models/model_evaluation/km_metrics.csv)
 
 ## 6 Cluster Analysis
 
 Meaningful labels can be assigned by looking at the distribution of the clusters in terms of the three key features - recency, frequency, and monetary values. 
 
-![Clusters Distribution](./docs/readme_files/Cluster_violinplot.png)
+![Clusters Distribution](./reports/figures/cluster_violinplot.png)
  
 Cluster 0: **Moderate**
 - Moderately frequent buyers that are not necessarily high spenders, and haven't purchased recently. 
@@ -142,11 +152,11 @@ Outliers in the data are designated as follows:
 
 ### CUSTOMER SEGMENTS
 
-![Customer Segments Bar](./docs/readme_files/Cluster_finalbar.png)
+![Customer Segments Bar](./reports/figures/cluster_barplot.png)
 
 **Customer Segments Proportion**
 
-![Customer Segments Tree](./docs/readme_files/Cluster_treemap.png)
+![Customer Segments Tree](./reports/figures/cluster_treemap.png)
 
 
 **Customer Segments Analysis and Recommendations**
