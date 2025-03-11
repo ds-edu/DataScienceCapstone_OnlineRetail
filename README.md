@@ -132,17 +132,25 @@ The Silhouette Plot revealed that between n_clusters=3 and n_clusters=4, the for
 
 ## 6 Cluster Analysis
 
-Meaningful labels can be assigned by looking at the distribution of the clusters in terms of the three key features - Recency, Frequency, and Monetary values. 
+Meaningful labels can be assigned by analyzing the distribution of the clusters in terms of the three key features - Recency, Frequency, and Monetary values. 
 
 ![Clusters Distribution](./reports/figures/cluster_violinplot.png)
+
+Starting with **Cluster-1**, its mean Recency feature is the highest compared to other clusters; however, both its mean Frequency and Monetary are the lowest compared to others, so Cluster-1 represents the most recent buyers only. 
+
+With **Cluster-2** having the highest mean in Monetary and Frequency feature, it can be easily be classified as the loyal customers. They are the customers that constantly or frequently buys items that are either in bulk or higher-value. Note, however, that the mean Recency feature is the lowest, indicative of no recent purchases. 
+
+**Cluster-0** placed second in all of the features in terms of its mean values. They are not necessarily big spenders, frequent and recent buyers but the mean values in all three features are not the least.    
+
+**Summary of the assigned labels to the 3 clusters:**
  
-Cluster 0: **Moderate**
+Cluster 0: ***Moderate***
 - Moderately frequent buyers that are not necessarily high spenders, and haven't purchased recently. 
 
-Cluster 1: **Recent**
+Cluster 1: ***Recent***
 - Less frequent buyers who are low-spenders but made recent purchases.
 
-Cluster 2: **Loyal**
+Cluster 2: ***Loyal***
 - Frequent shoppers who are high spenders, although no recent purchases.
 
 Outliers in the data are designated as follows:
