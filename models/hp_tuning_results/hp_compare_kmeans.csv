@@ -1,0 +1,4 @@
+Tuning,Best_params,Inertia,Silhouette_Score
+SMBO,"{'algorithm': 'lloyd', 'init': 'random', 'max_iter': 645, 'n_clusters': 2, 'n_init': 5, 'tol': 0.1}",6445.957038493043,0.4701018078133987
+RandomizedSearchCV,"{'tol': 0.1, 'n_init': 5, 'n_clusters': 3, 'max_iter': 200, 'init': 'k-means++', 'algorithm': 'elkan'}",3783.1724836942167,0.46830813890287193
+GridSeachCV,"{'algorithm': 'lloyd', 'init': 'random', 'max_iter': 100, 'n_clusters': 3, 'n_init': 10, 'tol': 0.01}",3780.7154605260903,0.4691852183619154

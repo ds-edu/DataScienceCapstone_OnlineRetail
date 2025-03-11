@@ -1,0 +1,6 @@
+Number,Description
+541910,Initial number of records
+-135080,Records with null Customer IDs dropped
+-8905,Negative quantities or cancelled invoices dropped
+-5192,Duplicate records dropped
+392733,Rows after Data Wrangling process

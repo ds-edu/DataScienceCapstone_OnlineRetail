@@ -1,0 +1,7 @@
+Algorithm,Tuning,Best_params,Silhouette_Score
+Agglomerative,GridSeachCV,"{'compute_distances': True, 'linkage': 'average', 'metric': 'l1', 'n_clusters': 2}",0.6098393537002034
+KMeans,GridSeachCV,"{'algorithm': 'lloyd', 'init': 'random', 'max_iter': 100, 'n_clusters': 3, 'n_init': 10, 'tol': 0.01}",0.47044017349834266
+KMeans,RandomizedSearchCV,"{'tol': 0.1, 'n_init': 5, 'n_clusters': 3, 'max_iter': 200, 'init': 'k-means++', 'algorithm': 'elkan'}",0.47018266395384084
+Agglomerative,RandomizedSearchCV,"{'n_clusters': 8, 'metric': 'manhattan', 'linkage': 'average', 'compute_distances': False}",0.3758451998570739
+DBSCAN,GridSeachCV,"{'eps': 0.18999999999999995, 'metric': 'euclidean', 'min_samples': 4}",-0.045182802757804716
+DBSCAN,RandomizedSearchCV,"{'min_samples': 4, 'metric': 'euclidean', 'eps': 0.17999999999999997}",-0.05727591763647412

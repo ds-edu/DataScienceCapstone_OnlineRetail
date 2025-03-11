@@ -1,0 +1,5 @@
+Number,Description
+392733,Row count before EDA process
+-40,Records with 0 price dropped
+-25670,Out of date range records dropped
+367023,Rows after EDA process
