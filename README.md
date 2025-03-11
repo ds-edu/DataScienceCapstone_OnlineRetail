@@ -10,7 +10,7 @@
 
 ## 1. Data
 
-This project aims to utilize machine learning for customer segmentation based on RFM analysis, focusing on three key features: Recency, Frequency, and Monetary value. The analysis aims to uncover valuable insights into customer purchasing behavior and transform the transactional data into a customer-centric dataset through feature engineering and clustering that will effectively aid in segmenting customers, enabling the business to determine appropriate marketing strategies and enhance the customer experience. Additionally, this analysis has the potential to significantly boost product sales, offering a promising outlook for the future
+This project utilizes machine learning for customer segmentation based on RFM analysis, focusing on three key features: Recency, Frequency, and Monetary value. The analysis aims to uncover valuable insights into customer purchasing behavior and transform the transactional data into a customer-centric dataset through feature engineering and clustering that will effectively aid in segmenting customers, enabling the business to determine appropriate marketing strategies and enhance the customer experience. Additionally, this analysis has the potential to significantly boost product sales, offering a promising outlook for the future.
 
 Data Source: [UCI Machine Learning Repository | Online Retail II](https://archive.ics.uci.edu/dataset/502/online+retail+ii)
 
@@ -92,9 +92,9 @@ As the hyperparameter search process cycles through each algorithm, a scoring fu
 
 [Hyperparameter Search Results](./models/hp_tuning_results/hp_search.csv)
 
-Out of the model evaluation outcomes, the hyperparameters in **KMeans** and **Agglomerative Hierarchichal Clustering** algorithms produced better silhouette scores in both cross-validation searches than DBSCAN. 
+> Out of the model evaluation outcomes, the hyperparameters in **KMeans** and **Agglomerative Hierarchichal Clustering** algorithms produced better silhouette scores in both cross-validation searches than DBSCAN. 
 
-Given this result, DBSCAN may not be the appropriate clustering algorithm for this dataset since it has negative scores indicating a poor clustering performance (and more overlapping clusters) compared to the two other algorithms that have a higher score. 
+> Given this result, DBSCAN may not be the appropriate clustering algorithm for this dataset since it has negative scores indicating a poor clustering performance (and more overlapping clusters) compared to the two other algorithms that have a higher score. 
 
 **KMeans metrics for CV and SMBO results**
 
@@ -109,7 +109,7 @@ Determining the best parameters for KMeans using GridSearchCV, RandomizedSearchC
 GridSearch and Randomized CV search methods are relatively inefficient compared to SMBO.
 SMBO works by considering the previously seen hyperparameter combinations when choosing the next set of hyperparameters to evluate. Grid and random searches, on the other hand, are completely uninformed by past evaluations and spends significant amount of time evaluating “bad” hyperparameters.
 
-| SMBO is the best hyperparameter search method, so its corresponding hyperparameters are utilized in model. |
+> SMBO is the best hyperparameter search method, so its corresponding hyperparameters are utilized in model. 
 
 **KMeans Clustering using best hyperparameters from SMBO**
 
@@ -120,12 +120,13 @@ To get a sense of the best K- no. of clusters, an inertia plot was shown:
 
 ![Inertia Plot](./reports/figures/km_inertiaplot.png)
 
-The "knee" point is either n_clusters=3 or n_clusters=4 so an additional Silhouette Analysis was performed.\
-The Silhouette Plot revealed that between n_clusters=3 and n_clusters=4, the former has lower negative silhouette coefficient values, and the cluster label heights is even better compared to the latter.
+The "knee" point is either n_clusters=3 or n_clusters=4 so an additional Silhouette Analysis was performed.
 
 ![Silhouette Analysis](./reports/figures/km_silplot.png)
 
-| **The optimal k number of clusters for this data using KMeans algorithm is 3.** |
+The Silhouette Plot revealed that between n_clusters=3 and n_clusters=4, the former has lower negative silhouette coefficient values, and the cluster label heights is even better compared to the latter.
+
+> **The optimal k number of clusters for this data using KMeans algorithm is 3.** 
 
 [Pickle files for clusters 2-10 here](./models)
 [KMeans Evaluation Metrics Summary](./models/model_evaluation/km_metrics.csv)
@@ -146,9 +147,9 @@ Cluster 2: **Loyal**
 - Frequent shoppers who are high spenders, although no recent purchases.
 
 Outliers in the data are designated as follows:
->  - Monetary outliers : High-Spenders Customers
->  - Frequency outliers : Frequent Customers
->  - Both Monetary and Frequency outliers : VIPs 
+- Monetary outliers : High-Spenders Customers
+- Frequency outliers : Frequent Customers
+- Both Monetary and Frequency outliers : VIPs 
 
 ### CUSTOMER SEGMENTS
 
@@ -159,7 +160,7 @@ Outliers in the data are designated as follows:
 ![Customer Segments Tree](./reports/figures/cluster_treemap.png)
 
 
-**Customer Segments Analysis and Recommendations**
+**CUSTOMER SEGMENTS ANALYSIS AND RECOMMENDATIONS**
 
 <font color='#fda848'><b>MODERATE</b></font>
 - Moderately frequent buyers that are not necessarily high spenders, and haven't purchased recently. 
