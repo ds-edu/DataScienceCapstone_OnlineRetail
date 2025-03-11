@@ -107,20 +107,19 @@ Determining the best parameters for KMeans using GridSearchCV, RandomizedSearchC
 |GridSeachCV|{'algorithm': 'lloyd', 'init': 'random', 'max_iter': 100, 'n_clusters': 3, 'n_init': 10, 'tol': 0.01}|3780.7154605260903|0.4691852183619154 |
 
 GridSearch and Randomized CV search methods are relatively inefficient compared to SMBO.
-SMBO works by considering the previously seen hyperparameter combinations when choosing the next set of hyperparameters to evluate. Grid and random searches, on the other hand, are completely uninformed by past evaluations and spends significant amount of time evaluating “bad” hyperparameters.
+SMBO works by considering the previously seen hyperparameter combinations when choosing the next set of hyperparameters to evaluate. Grid and random searches, on the other hand, are completely uninformed by past evaluations and spends significant amount of time evaluating “bad” hyperparameters.
 
-> SMBO is the best hyperparameter search method, so its corresponding hyperparameters are utilized in model. 
+**Modeling with KMeans using the best hyperparameters from SMBO**
 
-**KMeans Clustering using best hyperparameters from SMBO**
-
+> **SMBO is the best hyperparameter search method, so its corresponding hyperparameters are utilized in the model.** 
 > - Chosen algorithm : KMeans
 > - Best parameters : {'algorithm': 'lloyd', 'init': 'random', 'max_iter': 645, 'n_clusters': 2, 'n_init': 5, 'tol': 0.1}
 
-To get a sense of the best K- no. of clusters, an inertia plot was shown:
+The inertia plot was a very useful guide in getting a sense of the best K- no. of clusters.
 
 ![Inertia Plot](./reports/figures/km_inertiaplot.png)
 
-The "knee" point is either n_clusters=3 or n_clusters=4 so an additional Silhouette Analysis was performed.
+The "knee" point is either in n_clusters=3 or n_clusters=4. The silhouette analysis provides an insight on what would be the best between the two. 
 
 ![Silhouette Analysis](./reports/figures/km_silplot.png)
 
@@ -128,12 +127,12 @@ The Silhouette Plot revealed that between n_clusters=3 and n_clusters=4, the for
 
 > **The optimal k number of clusters for this data using KMeans algorithm is 3.** 
 
-[Pickle files for clusters 2-10 here](./models)
 [KMeans Evaluation Metrics Summary](./models/model_evaluation/km_metrics.csv)
+[Pickle files for n_clusters: 2-10 ](./models)
 
 ## 6 Cluster Analysis
 
-Meaningful labels can be assigned by looking at the distribution of the clusters in terms of the three key features - recency, frequency, and monetary values. 
+Meaningful labels can be assigned by looking at the distribution of the clusters in terms of the three key features - Recency, Frequency, and Monetary values. 
 
 ![Clusters Distribution](./reports/figures/cluster_violinplot.png)
  
