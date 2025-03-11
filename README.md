@@ -98,7 +98,7 @@ As the hyperparameter search process cycles through each algorithm, a scoring fu
 
 **KMeans metrics for CV and SMBO results**
 
-Determining the best parameters for KMeans using GridSearchCV, RandomizedSearchCV, and SMBO with the inertia as the criteria produced the following results:
+Determining the best parameters for KMeans using GridSearchCV, RandomizedSearchCV, and SMBO using ***Hyperopt***. Using inertia as the criteria for scoring produced the following results:
 
 |Tuning |Best_params                                      |Inertia           |Silhouette_Score   |
 |-------|-------------------------------------------------|------------------|-------------------|
@@ -107,7 +107,8 @@ Determining the best parameters for KMeans using GridSearchCV, RandomizedSearchC
 |GridSeachCV|{'algorithm': 'lloyd', 'init': 'random', 'max_iter': 100, 'n_clusters': 3, 'n_init': 10, 'tol': 0.01}|3780.7154605260903|0.4691852183619154 |
 
 GridSearch and Randomized CV search methods are relatively inefficient compared to SMBO.
-SMBO works by considering the previously seen hyperparameter combinations when choosing the next set of hyperparameters to evaluate. Grid and random searches, on the other hand, are completely uninformed by past evaluations and spends significant amount of time evaluating “bad” hyperparameters.
+
+SMBO is generally deemed better as it works by considering the previously seen hyperparameter combinations when choosing the next set of hyperparameters to evaluate. Grid and random searches, on the other hand, are completely uninformed by past evaluations and spends significant amount of time evaluating “bad” hyperparameters.
 
 **Modeling with KMeans using the best hyperparameters from SMBO**
 
@@ -127,8 +128,7 @@ The Silhouette Plot revealed that between n_clusters=3 and n_clusters=4, the for
 
 > **The optimal k number of clusters for this data using KMeans algorithm is 3.** 
 
-[KMeans Evaluation Metrics Summary](./models/model_evaluation/km_metrics.csv)
-[Pickle files for n_clusters: 2-10 ](./models)
+[KMeans Evaluation Metrics Summary](./models/model_evaluation/km_metrics.csv) | [Pickle files for n_clusters: 2-10 ](./models)
 
 ## 6 Cluster Analysis
 
@@ -152,6 +152,8 @@ Cluster 1: ***Recent***
 
 Cluster 2: ***Loyal***
 - Frequent shoppers who are high spenders, although no recent purchases.
+
+**Analyzing the outliers in the data**
 
 Outliers in the data are designated as follows:
 - Monetary outliers : High-Spenders Customers
