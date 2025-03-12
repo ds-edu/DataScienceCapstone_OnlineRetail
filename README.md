@@ -1,4 +1,4 @@
-![cover_photo](./docs/readme_files/Online_Shoppers.jpg)
+![cover_photo](./docs/readme_files/clustered_wide.png)
 
 # Customer Segmentation For An Online Retail Store
 
