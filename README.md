@@ -124,7 +124,7 @@ The "knee" point is either in n_clusters=3 or n_clusters=4. The silhouette analy
 
 ![Silhouette Analysis](./reports/figures/km_silplot.png)
 
-The Silhouette Plot revealed that between n_clusters=3 and n_clusters=4, the former has lower negative silhouette coefficient values, and the cluster label heights is even better compared to the latter.
+The Silhouette Plot revealed that between n_clusters=3 and n_clusters=4, the former has lesser density in negative silhouette coefficient values, and each of the cluster label height is even better compared to the latter.
 
 > **The optimal k number of clusters for this data using KMeans algorithm is 3.** 
 
@@ -160,7 +160,7 @@ Outliers in the data are designated as follows:
 - Frequency outliers : Frequent Customers
 - Both Monetary and Frequency outliers : VIPs 
 
-### CUSTOMER SEGMENTS
+### FINAL CUSTOMER SEGMENTATION
 
 ![Customer Segments Bar](./reports/figures/cluster_barplot.png)
 
@@ -211,4 +211,3 @@ Recommendations:
 2. Implement customer retention and loyalty programs
 3. Offer expedited or free shipping vouchers (whenever applicable)
 
-## 
