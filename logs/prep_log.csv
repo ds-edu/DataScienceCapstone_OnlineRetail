@@ -1,0 +1,7 @@
+Number,Description
+367023,Row count before Pre-processing step
+4219,RFM records per customer
+402,Monetary outliers
+412,Frequency outliers
+3817,Non-outliers in RFM records for modeling
+3817,Scaled RFM records for modeling
