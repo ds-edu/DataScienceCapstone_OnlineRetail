@@ -96,23 +96,33 @@ As the hyperparameter search process cycles through each algorithm, a scoring fu
 
 > Given this result, DBSCAN may not be the appropriate clustering algorithm for this dataset since it has negative scores indicating a poor clustering performance (and more overlapping clusters) compared to the two other algorithms that have a higher score. 
 
+> KMeans algorithm was better suited for clustering the data.
+
 **KMeans metrics for CV and SMBO results**
 
 Determining the best parameters for KMeans using GridSearchCV, RandomizedSearchCV, and SMBO using ***Hyperopt***. Using inertia as the criteria for scoring produced the following results:
 
-|Tuning |Best_params                                      |Inertia           |Silhouette_Score   |
-|-------|-------------------------------------------------|------------------|-------------------|
-|SMBO   |{'algorithm': 'lloyd', 'init': 'random', 'max_iter': 645, 'n_clusters': 2, 'n_init': 5, 'tol': 0.1}|6445.957038493043 |0.4701018078133987 |
-|RandomizedSearchCV|{'tol': 0.1, 'n_init': 5, 'n_clusters': 3, 'max_iter': 200, 'init': 'k-means++', 'algorithm': 'elkan'}|3783.1724836942167|0.46830813890287193|
-|GridSeachCV|{'algorithm': 'lloyd', 'init': 'random', 'max_iter': 100, 'n_clusters': 3, 'n_init': 10, 'tol': 0.01}|3780.7154605260903|0.4691852183619154 |
+|Tuning            |Best_params                                                                                               |Inertia           |Silhouette_Score   |
+|------------------|----------------------------------------------------------------------------------------------------------|------------------|-------------------|
+|SMBO              |{'algorithm': 'lloyd', 'init': 'k-means++', 'max_iter': 319, 'n_clusters': 2, 'n_init': 9, 'tol': 0.1}    |5989.735240178855 |0.43220293648047825|
+|RandomizedSearchCV|{'tol': 0.1, 'n_init': 5, 'n_clusters': 3, 'max_iter': 200, 'init': 'k-means++', 'algorithm': 'elkan'}    |3521.054583387378 |0.4529741764177548 |
+|GridSeachCV       |{'algorithm': 'lloyd', 'init': 'k-means++', 'max_iter': 100, 'n_clusters': 3, 'n_init': 10, 'tol': 0.0001}|3517.1919694514713|0.4526652931153385 |
 
-GridSearch and Randomized CV search methods are relatively inefficient compared to SMBO.
+> Using the preceding results, SMBO having the highest inertia doesn't necessarily imply that it has the best hyperparameters. Inertia scores decrease as n_cluster increases. The SMBO results with n_clusters = 2 (least loss determined by SMBO's fmin() ) had a unfair advantage over the results of the CVs. 
 
-SMBO is generally deemed better as it works by considering the previously seen hyperparameter combinations when choosing the next set of hyperparameters to evaluate. Grid and random searches, on the other hand, are completely uninformed by past evaluations and spends significant amount of time evaluating “bad” hyperparameters.
+> Likewise, the silhouette scores can't be used as the criteria because the results are from the same algorithm - it's only insightful when comparing between two different algorithms.  
+
+> So what's the criteria?
+
+> GridSearch and Randomized CV search methods are relatively inefficient compared to SMBO. In addition, Grid and random searches are completely uninformed by past evaluations and spends significant amount of time evaluating “bad” hyperparameters. 
+
+> **SMBO is generally deemed better** as it works by considering the previously seen hyperparameter combinations when choosing the next set of hyperparameters to evaluate; thus, its hyperparameters will be used for the subsequent modeling. 
+
 
 **Modeling with KMeans using the best hyperparameters from SMBO**
 
 > **SMBO is the best hyperparameter search method, so its corresponding hyperparameters are utilized in the model.** 
+>
 > - Chosen algorithm : KMeans
 > - Best parameters : {'algorithm': 'lloyd', 'init': 'random', 'max_iter': 645, 'n_clusters': 2, 'n_init': 5, 'tol': 0.1}
 
@@ -136,9 +146,9 @@ Meaningful labels can be assigned by analyzing the distribution of the clusters 
 
 ![Clusters Distribution](./reports/figures/cluster_violinplot.png)
 
-Starting with **Cluster-1**, its mean Recency feature is the highest compared to other clusters; however, both its mean Frequency and Monetary are the lowest compared to others, so Cluster-1 represents the most recent buyers only. 
+Starting with **Cluster-2**, its mean Recency feature is the highest compared to other clusters; however, both its mean Frequency and Monetary are the lowest compared to others, so Cluster-1 represents the most recent buyers only. 
 
-With **Cluster-2** having the highest mean in Monetary and Frequency feature, it can be easily be classified as the loyal customers. They are the customers that constantly or frequently buys items that are either in bulk or higher-value. Note, however, that the mean Recency feature is the lowest, indicative of no recent purchases. 
+With **Cluster-1** having the highest mean in Monetary and Frequency feature, it can be easily be classified as the loyal customers. They are the customers that constantly or frequently buys items that are either in bulk or higher-value. Note, however, that the mean Recency feature is the lowest, indicative of no recent purchases. 
 
 **Cluster-0** placed second in all of the features in terms of its mean values. They are not necessarily big spenders, frequent and recent buyers but the mean values in all three features are not the least.    
 
@@ -147,11 +157,12 @@ With **Cluster-2** having the highest mean in Monetary and Frequency feature, it
 Cluster 0: ***Moderate***
 - Moderately frequent buyers that are not necessarily high spenders, and haven't purchased recently. 
 
-Cluster 1: ***Recent***
+Cluster 1: ***Loyal***
+- Frequent shoppers who are high spenders, although no recent purchases.
+
+Cluster 2: ***Recent***
 - Less frequent buyers who are low-spenders but made recent purchases.
 
-Cluster 2: ***Loyal***
-- Frequent shoppers who are high spenders, although no recent purchases.
 
 **Analyzing the outliers in the data**
 
