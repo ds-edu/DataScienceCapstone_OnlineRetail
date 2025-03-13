@@ -1,7 +1,7 @@
 Algorithm,Tuning,Best_params,Silhouette_Score
-Agglomerative,GridSeachCV,"{'compute_distances': True, 'linkage': 'average', 'metric': 'euclidean', 'n_clusters': 2}",0.4596006398322124
-KMeans,GridSeachCV,"{'algorithm': 'lloyd', 'init': 'k-means++', 'max_iter': 100, 'n_clusters': 3, 'n_init': 10, 'tol': 0.0001}",0.4565482871147387
-KMeans,RandomizedSearchCV,"{'tol': 0.1, 'n_init': 5, 'n_clusters': 3, 'max_iter': 200, 'init': 'k-means++', 'algorithm': 'elkan'}",0.45530898524090935
-Agglomerative,RandomizedSearchCV,"{'n_clusters': 5, 'metric': 'manhattan', 'linkage': 'complete', 'compute_distances': False}",0.36650996339021963
-DBSCAN,GridSeachCV,"{'eps': 0.18999999999999995, 'metric': 'euclidean', 'min_samples': 4}",-0.009583034713490195
-DBSCAN,RandomizedSearchCV,"{'min_samples': 4, 'metric': 'euclidean', 'eps': 0.17999999999999997}",-0.028920348540151446
+Agglomerative,GridSearchCV,"{'compute_distances': True, 'linkage': 'average', 'metric': 'euclidean', 'n_clusters': 2}",0.4596006398322124
+KMeans,GridSearchCV,"{'algorithm': 'lloyd', 'init': 'k-means++', 'max_iter': 100, 'n_clusters': 3, 'n_init': 10, 'tol': 0.0001}",0.4565482871147387
+KMeans,RandomizedSearchCV,"{'tol': 0.1, 'n_init': 5, 'n_clusters': 3, 'max_iter': 200, 'init': 'k-means++', 'algorithm': 'elkan'}",0.4553089852409093
+Agglomerative,RandomizedSearchCV,"{'n_clusters': 5, 'metric': 'manhattan', 'linkage': 'complete', 'compute_distances': False}",0.3665099633902196
+DBSCAN,GridSearchCV,"{'eps': 0.18999999999999995, 'metric': 'euclidean', 'min_samples': 4}",-0.0095830347134901
+DBSCAN,RandomizedSearchCV,"{'min_samples': 4, 'metric': 'euclidean', 'eps': 0.17999999999999997}",-0.0289203485401514

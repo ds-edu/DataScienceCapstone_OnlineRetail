@@ -145,7 +145,7 @@ Meaningful labels were assigned simply by analyzing the distribution of the clus
 
 ![Clusters Distribution](./reports/figures/cluster_violinplot.png)
 
-Starting with **Cluster-2**, its mean Recency feature is the highest compared to other clusters; however, both its mean Frequency and Monetary are the lowest compared to others, so Cluster-1 represents the most recent buyers only. 
+Starting with **Cluster-2**, its mean Recency feature is the highest compared to other clusters; however, both its mean Frequency and Monetary are the lowest compared to others, so this cluster represents the most recent buyers only. 
 
 With **Cluster-1** having the highest mean in Monetary and Frequency feature, it's easily classified as the loyal customers. They are the customers that constantly or frequently buys items that are either in bulk or higher-value. Note, however, that the mean Recency feature is the lowest, indicative of no recent purchases. 
 
