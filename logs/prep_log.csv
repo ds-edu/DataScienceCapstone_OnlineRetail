@@ -3,5 +3,5 @@ Number,Description
 4219,RFM records per customer
 402,Monetary outliers
 412,Frequency outliers
-3817,Non-outliers in RFM records for modeling
-3817,Scaled RFM records for modeling
+3674,Non-outliers in RFM records for modeling
+3674,Scaled RFM records for modeling
