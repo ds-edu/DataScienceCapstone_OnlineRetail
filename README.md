@@ -145,22 +145,22 @@ Meaningful labels were assigned simply by analyzing the distribution of the clus
 
 ![Clusters Distribution](./reports/figures/cluster_violinplot.png)
 
-Starting with **Cluster-2**, its mean Recency feature is the highest compared to other clusters; however, both its mean Frequency and Monetary are the lowest compared to others, so this cluster represents the most recent buyers only. 
+Starting with **Cluster-2**, its mean Recency feature is the highest compared to other clusters; however, both its mean Frequency and Monetary are the lowest compared to others, so this cluster represents customers who are AT-RISK. 
 
-With **Cluster-1** having the highest mean in Monetary and Frequency feature, it's easily classified as the loyal customers. They are the customers that constantly or frequently buys items that are either in bulk or higher-value. Note, however, that the mean Recency feature is the lowest, indicative of no recent purchases. 
+With **Cluster-1** having the highest mean in Monetary and Frequency feature, it's easily classified as the loyal customers. They are the customers that constantly or frequently buys items that are either in bulk or higher-value. Note, however, that the mean Recency feature is the lowest, indicative of majority in this cluster made recent purchases. 
 
 **Cluster-0** placed second in all of the features in terms of its mean values. They are not necessarily big spenders, frequent and recent buyers but the mean values in all three features are not the least.    
 
 **Summary of the assigned labels to the 3 clusters:**
  
 Cluster 0: ***Moderate***
-- Moderately frequent buyers that are not necessarily high spenders, and haven't purchased recently. 
+- Moderately frequent buyers that are not necessarily high spenders. Majority in this segment made recent purchases. 
 
 Cluster 1: ***Loyal***
-- Frequent shoppers who are high spenders, although no recent purchases.
+- Frequent shoppers who are high spenders, and with its majority having purchased recently. 
 
-Cluster 2: ***Recent***
-- Less frequent buyers who are low-spenders but made recent purchases.
+Cluster 2: ***At-Risk***
+- Least active. Less frequent buyers who are low-spenders and minimal recent purchases. Requires attention and re-engaging!
 
 
 **Analyzing the outliers in the data**
@@ -182,23 +182,26 @@ Outliers in the data were designated as follows:
 **CUSTOMER SEGMENTS ANALYSIS AND RECOMMENDATIONS**
 
 <font color='#fda848'><b>MODERATE</b></font>
-- Moderately frequent buyers that are not necessarily high spenders, and haven't purchased recently. 
+
+- Moderately frequent buyers that are not necessarily high spenders. Majority in this segment made recent purchases.
 
 Recommendation: 
 1. Offer subscription on frequently bought items (whenever applicable)
 2. Recommend "Frequently bought together" items
 3. Implement customer retention and loyalty programs
 
-<font color='#69c641'><b>RECENT</b></font>
-- Less frequent buyers who are low-spenders but made recent purchases.
+<font color='#fd4848'><b>AT-RISK</b></font>
+
+- Least active segment. Less frequent buyers who are low-spenders and minimal recent purchases.
 
 Recommendations:
-1. Identify recently purhcased products and run targeted "similar products" ad recommendations
-2. Encourage to purchase more by offering incentives, vouchers, discounts, and bundle deals. 
-3. Enhance customer experience and services
+1. Requires attention and re-engaging. 
+2. Perform sentiment analysis. Send surveys and ask for or review feedback and ratings to understand sentiments and determine what can be improved. 
+3. Whenever possible, drop small rewards such as re-activation bonuses or discounts on their next purchase. 
+4. Tease or entice with the benefits of becoming active or loyal customer.  
 
 <font color='#fd4848'><b>LOYAL</b></font>
-- Frequent shoppers who are high spenders, although no recent purchases.
+- Frequent shoppers who are high spenders, and with its majority having purchased recently
 
 Recommendations:
 1. Re-engage by implementing rewards and loyalty programs, and exclusive perks
