@@ -22,7 +22,7 @@ Detailed description of the fields can be found in the aforementioned link.
 
 The [Data Wrangling](../notebooks/DataWrangling.ipynb) step kicked off with 541,910 records in the 2010 tab of the dataset. There were inconsistencies found in the dataset such as blank customer ID (~25%), negative quantities (1.6%) which were found to be related to cancelled invoices, and duplicate records (~1% ). These records were dropped from the dataset as they were deemed not helpful in analyzing the customer transactions. 
 
-An interesting column is the invoices which have values not conforming with the documented notation; however, thorough investigation suggested thatthose records don't contain irregularities in their respective numeric data. An assumption was then made that these transactions were made manually or done outside the order placement process. Because there are no anomalies in the numeric data, these records were not dropped.
+An interesting column is the invoices which have values not conforming with the documented notation; however, thorough investigation suggested thatthose records don't contain irregularities in their respective numeric data. An assumption was made that these transactions were entered manually or done outside the order placement process. Because there are no anomalies in the numeric data, these records were retained in the analysis.
 
 A total of 392733 records remain at the end of the Data Wrangling process.
 
@@ -49,7 +49,7 @@ Exploratory Data Analysis of the monthly sales indicated a steep decline in sale
 ![EDA Monthly Sales](./reports/figures/EDA_monthlysales.png)
 
 Further investigation revealed that the transactions for December was incomplete and that the latest was captured on the 9th of December which even less than the first half of the month. The total transactions in December only accounted for less than 5% of the whole transactions for the year. 
-Although there was transaction as high as 168469.6, much of the sales during the month are in the lower amount. 
+Although there was a transaction as high as 168,469.6, much of the sales during the month are in the lower amount. 
 
 ![December sales distribution](./reports/figures/EDA_decbox.png)
 
@@ -65,12 +65,12 @@ The distribution of data per feature is right-skewed, which indicates presence o
 
 ![RFM Distribution](./reports/figures/FE_rfmdist.png)
 
-The focus of this project is on clustering, so only the non-outliers will be processed by the model. 
-It is necessary to perform separate analysis on outliers as they represent extreme behaviours by the customers, such as very big spending and very frequent purchases. Below is the boxplot after separating the outliers:
+The focus of this project is on clustering, so only the non-outliers were processed by the model. 
+It is imperative to perform separate analysis on outliers as they represent extreme behaviours by the customers, such as very big spending and very frequent purchases. Below is the boxplot of the modeling data after outliers were separated:
 
 ![RFM Outliers](./reports/figures/FE_del_outliers.png)
 
-The outliers will be included in the cluster analysis down the line:
+The outliers were included in the cluster analysis after modeling:
 
 - Monetary outliers:  402
 - Frequency outliers:  412
@@ -94,13 +94,13 @@ As the hyperparameter search process cycles through each algorithm, a scoring fu
 
 > Out of the model evaluation outcomes, the hyperparameters in **KMeans** and **Agglomerative Hierarchichal Clustering** algorithms produced better silhouette scores in both cross-validation searches than DBSCAN. 
 
-> Given this result, DBSCAN may not be the appropriate clustering algorithm for this dataset since it has negative scores indicating a poor clustering performance (and more overlapping clusters) compared to the two other algorithms that have a higher score. 
+> Given the results, DBSCAN may not be the appropriate clustering algorithm for this dataset since it has negative scores indicating a poor clustering performance (and more overlapping clusters) compared to the two other algorithms that have a higher score. 
 
-> KMeans algorithm was better suited for clustering the data.
+> KMeans algorithm was better suited for clustering the data and thus was chosen for the Modeling process.
 
 **KMeans metrics for CV and SMBO results**
 
-Determining the best parameters for KMeans using GridSearchCV, RandomizedSearchCV, and SMBO using ***Hyperopt***. Using inertia as the criteria for scoring produced the following results:
+Finding the best parameters for KMeans using GridSearchCV, RandomizedSearchCV, and SMBO using ***Hyperopt*** returned the following results: 
 
 |Tuning            |Best_params                                                                                               |Inertia           |Silhouette_Score   |
 |------------------|----------------------------------------------------------------------------------------------------------|------------------|-------------------|
@@ -108,29 +108,28 @@ Determining the best parameters for KMeans using GridSearchCV, RandomizedSearchC
 |RandomizedSearchCV|{'tol': 0.1, 'n_init': 5, 'n_clusters': 3, 'max_iter': 200, 'init': 'k-means++', 'algorithm': 'elkan'}    |3521.054583387378 |0.4529741764177548 |
 |GridSeachCV       |{'algorithm': 'lloyd', 'init': 'k-means++', 'max_iter': 100, 'n_clusters': 3, 'n_init': 10, 'tol': 0.0001}|3517.1919694514713|0.4526652931153385 |
 
-> Using the preceding results, SMBO having the highest inertia doesn't necessarily imply that it has the best hyperparameters. Inertia scores decrease as n_cluster increases. The SMBO results with n_clusters = 2 (least loss determined by SMBO's fmin() ) had a unfair advantage over the results of the CVs. 
+Using the preceding results, SMBO having the highest inertia doesn't necessarily imply that it has the best hyperparameters. Inertia scores decrease as n_cluster increases. The SMBO results with n_clusters = 2 (least loss determined by SMBO's fmin() ) had a unfair advantage over the results of the CVs. 
 
-> Likewise, the silhouette scores can't be used as the criteria because the results are from the same algorithm - it's only insightful when comparing between two different algorithms.  
+Likewise, the silhouette scores weren't used as the criteria because the results are from the same algorithm - it's only insightful when comparing between two different algorithms.  
 
-> So what's the criteria?
+So what's the criteria?
 
-> GridSearch and Randomized CV search methods are relatively inefficient compared to SMBO. In addition, Grid and random searches are completely uninformed by past evaluations and spends significant amount of time evaluating “bad” hyperparameters. 
+GridSearch and Randomized CV search methods are relatively inefficient compared to SMBO. In addition, Grid and random searches are completely uninformed by past evaluations and spends significant amount of time evaluating “bad” hyperparameters. 
 
-> **SMBO is generally deemed better** as it works by considering the previously seen hyperparameter combinations when choosing the next set of hyperparameters to evaluate; thus, its hyperparameters will be used for the subsequent modeling. 
+**SMBO is generally deemed better** as it works by considering the previously seen hyperparameter combinations when choosing the next set of hyperparameters to evaluate; thus, its hyperparameters were used for the subsequent modeling. 
 
+> **As SMBO is deemed the best hyperparameter search method, its corresponding hyperparameters were utilized in the model.** 
 
 **Modeling with KMeans using the best hyperparameters from SMBO**
 
-> **SMBO is the best hyperparameter search method, so its corresponding hyperparameters are utilized in the model.** 
->
-> - Chosen algorithm : KMeans
-> - Best parameters : {'algorithm': 'lloyd', 'init': 'random', 'max_iter': 645, 'n_clusters': 2, 'n_init': 5, 'tol': 0.1}
+- Chosen algorithm : KMeans
+- Best parameters : {'algorithm': 'lloyd', 'init': 'random', 'max_iter': 645, 'n_clusters': 2, 'n_init': 5, 'tol': 0.1}
 
 The inertia plot was a very useful guide in getting a sense of the best K- no. of clusters.
 
 ![Inertia Plot](./reports/figures/km_inertiaplot.png)
 
-The "knee" point is either in n_clusters=3 or n_clusters=4. The silhouette analysis provides an insight on what would be the best between the two. 
+The "knee" point is either in n_clusters=3 or n_clusters=4. The silhouette analysis provided insights on what would be the best between the two. 
 
 ![Silhouette Analysis](./reports/figures/km_silplot.png)
 
@@ -142,13 +141,13 @@ The Silhouette Plot revealed that between n_clusters=3 and n_clusters=4, the for
 
 ## 6 Cluster Analysis
 
-Meaningful labels can be assigned by analyzing the distribution of the clusters in terms of the three key features - Recency, Frequency, and Monetary values. 
+Meaningful labels were assigned simply by analyzing the distribution of the clusters in terms of the three key features - Recency, Frequency, and Monetary values. 
 
 ![Clusters Distribution](./reports/figures/cluster_violinplot.png)
 
 Starting with **Cluster-2**, its mean Recency feature is the highest compared to other clusters; however, both its mean Frequency and Monetary are the lowest compared to others, so Cluster-1 represents the most recent buyers only. 
 
-With **Cluster-1** having the highest mean in Monetary and Frequency feature, it can be easily be classified as the loyal customers. They are the customers that constantly or frequently buys items that are either in bulk or higher-value. Note, however, that the mean Recency feature is the lowest, indicative of no recent purchases. 
+With **Cluster-1** having the highest mean in Monetary and Frequency feature, it's easily classified as the loyal customers. They are the customers that constantly or frequently buys items that are either in bulk or higher-value. Note, however, that the mean Recency feature is the lowest, indicative of no recent purchases. 
 
 **Cluster-0** placed second in all of the features in terms of its mean values. They are not necessarily big spenders, frequent and recent buyers but the mean values in all three features are not the least.    
 
@@ -166,7 +165,7 @@ Cluster 2: ***Recent***
 
 **Analyzing the outliers in the data**
 
-Outliers in the data are designated as follows:
+Outliers in the data were designated as follows:
 - Monetary outliers : High-Spenders Customers
 - Frequency outliers : Frequent Customers
 - Both Monetary and Frequency outliers : VIPs 
