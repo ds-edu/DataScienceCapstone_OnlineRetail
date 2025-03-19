@@ -35,7 +35,7 @@ A total of 392733 records remain at the end of the Data Wrangling process.
 |392733 |Rows after Data Wrangling process                |
 
 
-## 3. EDA
+## 3. Exploratory Data Analysis - EDA
 
 The [EDA](./notebooks/ExploratoryDataAnalysis.ipynb) step revealed 0-priced items and transactions later than December 30, 2010. These records were then removed and the dataset ended up with 367,023 records after dropping those invalid records. Out of the 367,023 records the valid transactions for the whole year can be summarized as follows:
 
@@ -53,7 +53,7 @@ Although there was a transaction as high as 168,469.6, much of the sales during 
 
 ![December sales distribution](./reports/figures/EDA_decbox.png)
 
-## 4. Pre-processing
+## 4. Pre-processing and Feature Engineering
 
 [Preprocessing](./notebooks/Preprocessing.ipynb) step was initiated by feature engineering the columns to reflect the RFM features per customer - that is:
 
@@ -92,7 +92,7 @@ As the hyperparameter search process cycles through each algorithm, a scoring fu
 
 [Hyperparameter Search Results](./models/hp_tuning_results/hp_search.csv)
 
-> Out of the model evaluation outcomes, the hyperparameters in **KMeans** and **Agglomerative Hierarchichal Clustering** algorithms produced better silhouette scores in both cross-validation searches than DBSCAN. 
+> Out of the model evaluation outcomes, the hyperparameters in **KMeans** and **Agglomerative Hierarchichal Clustering** algorithms produced better silhouette scores than DBSCAN on the cross-validation searches. 
 
 > Given the results, DBSCAN may not be the appropriate clustering algorithm for this dataset since it has negative scores indicating a poor clustering performance (and more overlapping clusters) compared to the two other algorithms that have a higher score. 
 
@@ -145,9 +145,9 @@ Meaningful labels were assigned simply by analyzing the distribution of the clus
 
 ![Clusters Distribution](./reports/figures/cluster_violinplot.png)
 
-Starting with **Cluster-2**, its mean Recency feature is the highest compared to other clusters; however, both its mean Frequency and Monetary are the lowest compared to others, so this cluster represents customers who are AT-RISK. 
+Starting with **Cluster-2**, its mean Recency feature is the highest (which is bad) compared to other clusters. In addition, both its mean Frequency and Monetary are the lowest compared to others, so this cluster represents customers who are AT-RISK. 
 
-With **Cluster-1** having the highest mean in Monetary and Frequency feature, it's easily classified as the loyal customers. They are the customers that constantly or frequently buys items that are either in bulk or higher-value. Note, however, that the mean Recency feature is the lowest, indicative of majority in this cluster made recent purchases. 
+With **Cluster-1** having the highest mean in Monetary and Frequency feature, it's easily classified as the loyal customers. They are the customers that constantly or frequently buys items that are either in bulk or higher-value. Note, however, that the mean Recency feature is the lowest, indicating a  majority in this cluster made recent purchases. 
 
 **Cluster-0** placed second in all of the features in terms of its mean values. They are not necessarily big spenders, frequent and recent buyers but the mean values in all three features are not the least.    
 
@@ -160,7 +160,7 @@ Cluster 1: ***Loyal***
 - Frequent shoppers who are high spenders, and with its majority having purchased recently. 
 
 Cluster 2: ***At-Risk***
-- Least active. Less frequent buyers who are low-spenders and minimal recent purchases. Requires attention and re-engaging!
+- Least active. Less frequent buyers who are low-spenders and with minimal recent purchases. Requires attention and re-engaging!
 
 
 **Analyzing the outliers in the data**
@@ -171,6 +171,8 @@ Outliers in the data were designated as follows:
 - Both Monetary and Frequency outliers : VIPs 
 
 ### FINAL CUSTOMER SEGMENTATION
+
+Having analyzed all of the clusters the following charts provide an insight on the number and proportion of each cluster.
 
 ![Customer Segments Bar](./reports/figures/cluster_barplot.png)
 
@@ -192,7 +194,7 @@ Recommendation:
 
 <font color='#fd4848'><b>AT-RISK</b></font>
 
-- Least active segment. Less frequent buyers who are low-spenders and minimal recent purchases.
+- Least active segment. Less frequent buyers who are low-spenders and with minimal recent purchases.
 
 Recommendations:
 1. Requires attention and re-engaging. 
@@ -223,4 +225,7 @@ Recommendations:
 1. Offer subscription on frequently bought items (whenever applicable)
 2. Implement customer retention and loyalty programs
 3. Offer expedited or free shipping vouchers (whenever applicable)
+
+
+
 
