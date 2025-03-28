@@ -198,15 +198,15 @@ Recommendation:
 
 Recommendations:
 1. Requires attention and re-engaging. 
-2. Perform sentiment analysis. Send surveys and ask for or review feedback and ratings to understand sentiments and determine what can be improved. 
-3. Whenever possible, drop small rewards such as re-activation bonuses or discounts on their next purchase. 
-4. Tease or entice with the benefits of becoming active or loyal customer.  
+2. Perform sentiment analysis. Send surveys and ask for reviews or feedback. Identify areas for improvement to enhance the overall buying experience  
+3. Whenever possible, drop small rewards such as re-activation bonuses or discounts on their next purchase 
+4. Tease or entice with the benefits of becoming active or loyal customer  
 
 <font color='#fd4848'><b>LOYAL</b></font>
 - Frequent shoppers who are high spenders, and with its majority having purchased recently
 
 Recommendations:
-1. Re-engage by implementing rewards and loyalty programs, and exclusive perks
+1. Re-engage by implementing rewards, loyalty programs, and exclusive perks
 2. Run targeted ads for trending items and top items sold 
 3. Offer subscription on frequently bought items (whenever applicable)
 
@@ -214,7 +214,7 @@ Recommendations:
 - High value, frequent buyers. 
 
 Recommendations:
-1. Offer exclusive perks, and vouchers
+1. Offer exclusive VIP perks, and vouchers
 2. Pamper and enhance shopping experience by offering expedited or free shipping (whenever applicable)
 2. Offer additional discounts on bulk purchases (whenever applicable)
 
@@ -226,6 +226,14 @@ Recommendations:
 2. Implement customer retention and loyalty programs
 3. Offer expedited or free shipping vouchers (whenever applicable)
 
+## Final Thoughts and Next Steps
 
+After identifying each cluster and analyzing their respective RFM features, initiate discussions with the marketing team to determine appropriate targeted marketing campaigns for each customer segment and evaluate their feasibility. 
+
+Develop metrics to measure the effectiveness of the marketing campaigns and the implementation of new processes. Periodically monitor progress and metrics by assessing customer responses and sentiments to determine if sales, profitability, and customer retention improve over time. 
+
+Although it falls outside the scope of this analysis, the marketing team may choose to explore additional customer segmentation methods beyond RFM analysis, such as demographic and behavioral factors, to gain further insights into customer behavior. It is also advisable to conduct sentiment analysis to understand customer feelings about existing products, offerings, and services, as this could provide valuable insights for potential service improvements. Revisit the customer data-gathering process to obtain additional information and assess the need to transform the current IT landscape to support these changes. 
+
+Utilizing Machine Learning Recommendation Systems, introduce product recommendations to enhance the shopping experience, potentially increasing traffic and boosting sales.
 
 
