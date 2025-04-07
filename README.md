@@ -10,7 +10,7 @@
 
 ## 1. Data
 
-This project utilizes machine learning for customer segmentation based on RFM analysis, focusing on three key features: Recency, Frequency, and Monetary value. The analysis aims to uncover valuable insights into customer purchasing behavior and transform the transactional data into a customer-centric dataset through feature engineering and clustering that will effectively aid in segmenting customers, enabling the business to determine appropriate marketing strategies and enhance the customer experience. Additionally, this analysis has the potential to significantly boost product sales, offering a promising outlook for the future.
+This project utilizes machine learning for customer segmentation based on RFM analysis, focusing on three key features: Recency, Frequency, and Monetary value. The analysis aims to uncover valuable insights into customer purchasing behavior and transform the transactional data into a customer-centric dataset through feature engineering. Using clustering algorithms in Machine Learning will effectively aid in segmenting customers, enabling the business to determine appropriate marketing strategies and enhance the customer experience. Additionally, this analysis has the potential to significantly boost product sales and drive revenue, offering a promising outlook for the future.
 
 Data Source: [UCI Machine Learning Repository | Online Retail II](https://archive.ics.uci.edu/dataset/502/online+retail+ii)
 
@@ -20,11 +20,13 @@ Detailed description of the fields can be found in the aforementioned link.
 
 ## 2. Data Wrangling
 
-The [Data Wrangling](../notebooks/DataWrangling.ipynb) step kicked off with 541,910 records in the 2010 tab of the dataset. There were inconsistencies found in the dataset such as blank customer ID (~25%), negative quantities (1.6%) which were found to be related to cancelled invoices, and duplicate records (~1% ). These records were dropped from the dataset as they were deemed not helpful in analyzing the customer transactions. 
+The [Data Wrangling](../notebooks/DataWrangling.ipynb) step kicked off with 541,910 records in the 2010 dataset tab. 
 
-An interesting column is the invoices which have values not conforming with the documented notation; however, thorough investigation suggested thatthose records don't contain irregularities in their respective numeric data. An assumption was made that these transactions were entered manually or done outside the order placement process. Because there are no anomalies in the numeric data, these records were retained in the analysis.
+Several inconsistencies were identified, including blank customer IDs (approximately 25%), negative quantity values (1.6%), which were related to canceled invoices, and duplicate records (around 1%). These problematic records were removed from the dataset, as they were not particularly useful in analyzing customer transactions. 
 
-A total of 392733 records remain at the end of the Data Wrangling process.
+One noteworthy column contained invoice values that did not conform to the documented format. However, a thorough investigation revealed that these records had no anomalies in their respective numeric data. These transactions were assumed to be entered manually or processed outside the official order placement system. Since there were no irregularities in the numeric data, these records were included in the analysis. 
+
+At the conclusion of the Data Wrangling step, there were 392,733 records remaining for exploratory data analysis (EDA).
 
 |Number |Description                                      |
 |-------|-------------------------------------------------|
@@ -37,27 +39,28 @@ A total of 392733 records remain at the end of the Data Wrangling process.
 
 ## 3. Exploratory Data Analysis - EDA
 
-The [EDA](./notebooks/ExploratoryDataAnalysis.ipynb) step revealed 0-priced items and transactions later than December 30, 2010. These records were then removed and the dataset ended up with 367,023 records after dropping those invalid records. Out of the 367,023 records the valid transactions for the whole year can be summarized as follows:
+The Exploratory Data Analysis (EDA) step revealed that there were transactions involving items priced at zero and transactions dated after December 30, 2010, which were outside the intended date range. These invalid transactions were removed from the dataset, reducing the record count to 367,023.
 
-- Unique Invoices:  17132
-- Unique Countries:  36
-- Unique StockCodes:  3596
-- Unique Customer IDs:  4219
+From the remaining 367,023 records, valid transactions for the entire year can be summarized as follows:
 
-Exploratory Data Analysis of the monthly sales indicated a steep decline in sales in December was revealed.
+- Unique Invoices: 17132
+- Unique Countries: 36
+- Unique Stock Codes: 3,596
+- Unique Customer IDs: 4,219
+
+Another significant observation from the analysis is the steep decline in monthly sales during December.
 
 ![EDA Monthly Sales](./reports/figures/EDA_monthlysales.png)
 
-Further investigation revealed that the transactions for December was incomplete and that the latest was captured on the 9th of December which even less than the first half of the month. The total transactions in December only accounted for less than 5% of the whole transactions for the year. 
-Although there was a transaction as high as 168,469.6, much of the sales during the month are in the lower amount. 
+Further investigation revealed that the transactions for December were incomplete, with the last record for that month only available up to December 9. No transactions were recorded after that date.
 
-![December sales distribution](./reports/figures/EDA_decbox.png)
+This explains the sharp decline in December sales. Despite a high transaction amount of 168,469.6, much of the sales during the month were from lower-value transactions, resulting in the total transactions for December accounting for less than 5% of the entire year's transactions.
 
 ## 4. Pre-processing and Feature Engineering
 
 [Preprocessing](./notebooks/Preprocessing.ipynb) step was initiated by feature engineering the columns to reflect the RFM features per customer - that is:
 
-- Recency - How long has it been since the customer's last purchase date? * 
+- Recency - How long has it been since the customer's last purchase date? 
 - Frequency - How many transactions in did the customer have? 
 - Monetary - How much was spent by the customer?
 
@@ -65,8 +68,7 @@ The distribution of data per feature is right-skewed, which indicates presence o
 
 ![RFM Distribution](./reports/figures/FE_rfmdist.png)
 
-The focus of this project is on clustering, so only the non-outliers were processed by the model. 
-It is imperative to perform separate analysis on outliers as they represent extreme behaviours by the customers, such as very big spending and very frequent purchases. Below is the boxplot of the modeling data after outliers were separated:
+This project emphasizes clustering, so only non-outlier data points were used in the model. It is essential to conduct separate analyses on outliers because they represent extreme behaviors of customers, such as significant spending and frequent purchases. Below is the boxplot of the modeling data after the outliers were removed:
 
 ![RFM Outliers](./reports/figures/FE_del_outliers.png)
 
@@ -84,19 +86,19 @@ The outliers were included in the cluster analysis after modeling:
 
 **Hyperparameter Search: Nested Cross-Validation**
 
-In the [Modeling](./notebooks/Modeling.ipynb) step, three hyperparameter optimization searches were tested accross all three aforementioned algorithms by utilizing the nested cross validation approach to determine the optimal parameters per algorithm.
+In the [Modeling](./notebooks/Modeling.ipynb) step, a ***nested cross-validation approach*** was employed for the hyperparameter optimization search for all three aforementioned algorithms.
 
-As the hyperparameter search process cycles through each algorithm, a scoring function is used to determine the their respective silhouette scores. 
+Note that as the hyperparameter search process cycles through each algorithm, a scoring function is employed to determine their respective silhouette scores to gain an insight which model has the better performance. 
 
 ![Hyperparameter Search](./reports/figures/hp_search.png)
 
 [Hyperparameter Search Results](./models/hp_tuning_results/hp_search.csv)
 
-> Out of the model evaluation outcomes, the hyperparameters in **KMeans** and **Agglomerative Hierarchichal Clustering** algorithms produced better silhouette scores than DBSCAN on the cross-validation searches. 
+> Among the evaluation results, the hyperparameters for the **KMeans** and **Agglomerative Hierarchical Clustering** algorithms yielded better silhouette scores than DBSCAN during the cross-validation searches.
 
-> Given the results, DBSCAN may not be the appropriate clustering algorithm for this dataset since it has negative scores indicating a poor clustering performance (and more overlapping clusters) compared to the two other algorithms that have a higher score. 
+> Given these findings, it appears that DBSCAN may not be the most suitable clustering algorithm for this dataset, as it exhibited negative scores, indicating poor clustering performance and a greater degree of overlapping clusters compared to the other two algorithms, which achieved higher scores.
 
-> KMeans algorithm was better suited for clustering the data and thus was chosen for the Modeling process.
+> Therefore, the KMeans algorithm was determined to be the most effective for clustering the data and was selected for the modeling process.
 
 **KMeans metrics for CV and SMBO results**
 
@@ -108,7 +110,7 @@ Finding the best parameters for KMeans using GridSearchCV, RandomizedSearchCV, a
 |RandomizedSearchCV|{'tol': 0.1, 'n_init': 5, 'n_clusters': 3, 'max_iter': 200, 'init': 'k-means++', 'algorithm': 'elkan'}    |3521.054583387378 |0.4529741764177548 |
 |GridSeachCV       |{'algorithm': 'lloyd', 'init': 'k-means++', 'max_iter': 100, 'n_clusters': 3, 'n_init': 10, 'tol': 0.0001}|3517.1919694514713|0.4526652931153385 |
 
-Using the preceding results, SMBO having the highest inertia doesn't necessarily imply that it has the best hyperparameters. Inertia scores decrease as n_cluster increases. The SMBO results with n_clusters = 2 (least loss determined by SMBO's fmin() ) had a unfair advantage over the results of the CVs. 
+Using the preceding results, the SMBO results returned the highest inertia; however, it doesn't necessarily imply that it has the best hyperparameters. Inertia scores decrease as n_cluster increases. The SMBO results with n_clusters = 2 (least loss determined by SMBO's fmin() minimizing function ) had a unfair advantage over the results of the CVs. 
 
 Likewise, the silhouette scores weren't used as the criteria because the results are from the same algorithm - it's only insightful when comparing between two different algorithms.  
 
@@ -133,7 +135,7 @@ The "knee" point is either in n_clusters=3 or n_clusters=4. The silhouette analy
 
 ![Silhouette Analysis](./reports/figures/km_silplot.png)
 
-The Silhouette Plot revealed that between n_clusters=3 and n_clusters=4, the former has lesser density in negative silhouette coefficient values, and each of the cluster label height is even better compared to the latter.
+The Silhouette Plot indicated that between n_clusters=3 and n_clusters=4, **n_clusters=3** is preferable because it has fewer negative silhouette coefficient values, and the heights of each cluster label height better distributed than the other.
 
 > **The optimal k number of clusters for this data using KMeans algorithm is 3.** 
 
@@ -141,15 +143,15 @@ The Silhouette Plot revealed that between n_clusters=3 and n_clusters=4, the for
 
 ## 6 Cluster Analysis
 
-Meaningful labels were assigned simply by analyzing the distribution of the clusters in terms of the three key features - Recency, Frequency, and Monetary values. 
+Meaningful labels were assigned by analyzing the distribution of clusters based on the three key features: Recency, Frequency, and Monetary values.
 
 ![Clusters Distribution](./reports/figures/cluster_violinplot.png)
 
-Starting with **Cluster-2**, its mean Recency feature is the highest (which is bad) compared to other clusters. In addition, both its mean Frequency and Monetary are the lowest compared to others, so this cluster represents customers who are AT-RISK. 
+Starting with **Cluster-2**, it has the highest mean Recency feature, which is a negative indicator, compared to the other clusters. Additionally, both its mean Frequency and Monetary values are the lowest among all clusters. This suggests that this cluster represents customers who are **AT RISK** of churning.
 
-With **Cluster-1** having the highest mean in Monetary and Frequency feature, it's easily classified as the loyal customers. They are the customers that constantly or frequently buys items that are either in bulk or higher-value. Note, however, that the mean Recency feature is the lowest, indicating a  majority in this cluster made recent purchases. 
+**Cluster-1**, on the other hand, has the highest mean values for both Monetary and Frequency features, making it easy to classify these customers as loyal. They appear to be consistently making frequent purchases. Notably, the mean Recency feature in this cluster is the lowest, indicating that most customers here have made recent purchases.
 
-**Cluster-0** placed second in all of the features in terms of its mean values. They are not necessarily big spenders, frequent and recent buyers but the mean values in all three features are not the least.    
+**Cluster-0** ranks second in all three features in terms of mean values. While they are not necessarily big spenders or frequent and recent buyers, their mean values in all three categories are not the lowest.
 
 **Summary of the assigned labels to the 3 clusters:**
  
@@ -172,7 +174,7 @@ Outliers in the data were designated as follows:
 
 ### FINAL CUSTOMER SEGMENTATION
 
-Having analyzed all of the clusters the following charts provide an insight on the number and proportion of each cluster.
+After analyzing all the clusters, the following charts offer insight into the number and proportion of each cluster.
 
 ![Customer Segments Bar](./reports/figures/cluster_barplot.png)
 
@@ -182,6 +184,9 @@ Having analyzed all of the clusters the following charts provide an insight on t
 
 
 **CUSTOMER SEGMENTS ANALYSIS AND RECOMMENDATIONS**
+
+
+The clusters derived from the RFM analysis are presented below, accompanied by initial recommendations from the data scientist. These recommendations will be evaluated and refined by the marketing team and stakeholders in upcoming business reviews and strategic discussions.
 
 <font color='#fda848'><b>MODERATE</b></font>
 
@@ -228,12 +233,9 @@ Recommendations:
 
 ## Final Thoughts and Next Steps
 
-After identifying each cluster and analyzing their respective RFM features, initiate discussions with the marketing team to determine appropriate targeted marketing campaigns for each customer segment and evaluate their feasibility. 
+After identifying each cluster and analyzing their respective RFM features, initiate discussions with the marketing team to determine suitable targeted marketing campaigns for each customer segment and evaluate their feasibility. It is imperative to develop metrics to measure the effectiveness of the marketing campaigns and the implementation of new processes. Periodically monitor progress by assessing customer responses and sentiments to determine whether customer satisfaction and customer retention improve over time. 
 
-Develop metrics to measure the effectiveness of the marketing campaigns and the implementation of new processes. Periodically monitor progress and metrics by assessing customer responses and sentiments to determine if sales, profitability, and customer retention improve over time. 
+Although it may be beyond the scope of this analysis, the marketing team may also consider exploring additional customer segmentation methods beyond RFM analysis, such as demographic and behavioral factors, to gain deeper insights into customer behavior. Conducting sentiment analysis is also advisable to understand customer feelings about existing products, offerings, and services, as this could provide valuable insights for potential service improvements or additional offerings. Introduce personalized recommendations using Recommendation Engines to enhance the buying experience, which could potentially increase traffic and boost sales.
 
-Although it falls outside the scope of this analysis, the marketing team may choose to explore additional customer segmentation methods beyond RFM analysis, such as demographic and behavioral factors, to gain further insights into customer behavior. It is also advisable to conduct sentiment analysis to understand customer feelings about existing products, offerings, and services, as this could provide valuable insights for potential service improvements. Revisit the customer data-gathering process to obtain additional information and assess the need to transform the current IT landscape to support these changes. 
-
-Utilizing Machine Learning Recommendation Systems, introduce product recommendations to enhance the shopping experience, potentially increasing traffic and boosting sales.
-
+Using these recommended actions may entail revisiting the customer data-gathering process to obtain more information and assessing the need to transform the current IT landscape to support these changes.
 
